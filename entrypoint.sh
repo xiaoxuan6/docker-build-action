@@ -36,11 +36,11 @@ if [ $DOCKERFILE != "Dockerfile" ]; then
   set -- "$@" -f $DOCKERFILE
 fi
 
-if [ $DOCKER_IMAGE_PLATFORM != "" ]; then
+if [ "$(echo "${DOCKER_IMAGE_PLATFORM}")" != "" ]; then
   set -- "$@" --platform $DOCKER_IMAGE_PLATFORM
 fi
 
-if [ $CUSTOM_DOCKER_BUILD_ARGS != "" ]; then
+if [ "$(echo "${CUSTOM_DOCKER_BUILD_ARGS}")" != "" ]; then
   set -- "$@" "$CUSTOM_DOCKER_BUILD_ARGS"
 fi
 
