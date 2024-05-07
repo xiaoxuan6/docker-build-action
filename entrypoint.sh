@@ -44,7 +44,7 @@ set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}")
 #   set -- $(echo "${@}") $(echo "${CUSTOM_DOCKER_BUILD_ARGS}")
 # fi
 
-# set -- $(echo "${@}") $(echo "${BUILD_CONTEXT}")
+set -- $(echo "${@}") $(echo "${BUILD_CONTEXT}")
 
 # for tag in $(echo "${DOCKER_IMAGE_TAGS}")
 # do
