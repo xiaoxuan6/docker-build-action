@@ -11,7 +11,7 @@ DOCKER_IMAGE_TAGS=$8
 DOCKER_IMAGE_PLATFORM=$9
 CUSTOM_DOCKER_BUILD_ARGS=${10}
 
-if [ $(echo ${EXTRACT_TAG_FROM_GIT_REF}) == "true" ]; then
+if [ "$(echo ${EXTRACT_TAG_FROM_GIT_REF})" == 'true' ]; then
   DOCKER_IMAGE_TAG=$(echo ${GITHUB_REF} | sed -e "s/refs\/tags\///g")
 fi
 
@@ -22,22 +22,22 @@ docker buildx create --use # Creating builder instance to support cross-platform
 
 docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
 
-if [ $(echo ${PULL_IMAGE}) == "true" ]; then
-  if [ $(echo ${DOCKER_IMAGE_PLATFORM}) != "" ]; then
-    docker pull $(echo ${DOCKER_IMAGE_NAME_WITH_TAG}) --platform $(echo ${DOCKER_IMAGE_PLATFORM}) || docker pull $(echo ${DOCKER_IMAGE_NAME}) --platform $(echo ${DOCKER_IMAGE_PLATFORM}) || true
+if [ "$(echo ${PULL_IMAGE})" == 'true' ]; then
+  if [ "$(echo ${DOCKER_IMAGE_PLATFORM})" != '' ]; then
+    docker pull ${DOCKER_IMAGE_NAME_WITH_TAG} --platform ${DOCKER_IMAGE_PLATFORM} || docker pull ${DOCKER_IMAGE_NAME} --platform ${DOCKER_IMAGE_PLATFORM} || true
   else
-    docker pull $(echo ${DOCKER_IMAGE_NAME_WITH_TAG}) || docker pull $(echo ${DOCKER_IMAGE_NAME}) || true
+    docker pull  ${DOCKER_IMAGE_NAME_WITH_TAG} || docker pull ${DOCKER_IMAGE_NAME} || true
   fi
 fi
 
-set -- -t $(echo ${DOCKER_IMAGE_NAME_WITH_TAG})
+set -- -t ${DOCKER_IMAGE_NAME_WITH_TAG}
 
-if [ $(echo ${DOCKERFILE}) != "Dockerfile" ]; then
-  set -- $(echo ${@}) -f $(echo ${DOCKERFILE})
+if [ "$(echo ${DOCKERFILE})" != 'Dockerfile' ]; then
+  set -- $(echo ${@}) -f ${DOCKERFILE}
 fi
 
-if [ $(echo ${DOCKER_IMAGE_PLATFORM}) != "" ]; then
-  set -- $(echo ${@}) --platform $(echo ${DOCKER_IMAGE_PLATFORM})
+if [ "$(echo ${DOCKER_IMAGE_PLATFORM})" != '' ]; then
+  set -- $(echo ${@}) --platform ${DOCKER_IMAGE_PLATFORM}
 fi
 
 echo "Check args"
@@ -46,15 +46,12 @@ if [ "$(echo ${CUSTOM_DOCKER_BUILD_ARGS})" != '' ]; then
   set -- ${@} ${CUSTOM_DOCKER_BUILD_ARGS}
 fi
 
-echo "Set context"
 set -- ${@} ${BUILD_CONTEXT}
 
-echo "Check DOCKER_IMAGE_TAGS"
-for tag in $(echo ${DOCKER_IMAGE_TAGS})
+for tag in ${DOCKER_IMAGE_TAGS}
 do
     DOCKER_IMAGE_NAME_WITH_TAG=$(echo ${DOCKER_IMAGE_NAME}:${tag} | tr '[:upper:]' '[:lower:]')
-    set -- -t $(echo ${DOCKER_IMAGE_NAME_WITH_TAG}) $(echo ${@})
+    set -- -t ${DOCKER_IMAGE_NAME_WITH_TAG} ${@}
 done
 
-echo "Start build"
 docker buildx build --push ${@}
