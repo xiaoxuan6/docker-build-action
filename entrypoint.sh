@@ -32,9 +32,9 @@ fi
 
 set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}")
 
-# if [ $(echo "${DOCKERFILE}") != "Dockerfile" ]; then
-#   set -- $(echo "${@}") -f $(echo "${DOCKERFILE}")
-# fi
+if [ $(echo "${DOCKERFILE}") != "Dockerfile" ]; then
+  set -- $(echo "${@}") -f $(echo "${DOCKERFILE}")
+fi
 
 if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
   set -- $(echo "${@}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}")
@@ -46,10 +46,10 @@ fi
 
 set -- $(echo "${@}") $(echo "${BUILD_CONTEXT}")
 
-# for tag in $(echo "${DOCKER_IMAGE_TAGS}")
-# do
-#     DOCKER_IMAGE_NAME_WITH_TAG=$(echo ${DOCKER_IMAGE_NAME}:${tag} | tr '[:upper:]' '[:lower:]')
-#     set -- -t $DOCKER_IMAGE_NAME_WITH_TAG $(echo "${@}")
-# done
+for tag in $(echo "${DOCKER_IMAGE_TAGS}")
+do
+    DOCKER_IMAGE_NAME_WITH_TAG=$(echo ${DOCKER_IMAGE_NAME}:${tag} | tr '[:upper:]' '[:lower:]')
+    set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}") $(echo "${@}")
+done
 
 docker buildx build --push $(echo "${@}")
