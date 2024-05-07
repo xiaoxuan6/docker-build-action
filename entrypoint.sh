@@ -41,10 +41,10 @@ if [ $(echo ${DOCKER_IMAGE_PLATFORM}) != "" ]; then
 fi
 
 if [ $(echo ${CUSTOM_DOCKER_BUILD_ARGS}) != "" ]; then
-  set -- $(echo ${@}) $(echo ${CUSTOM_DOCKER_BUILD_ARGS})
+  set -- ${@} ${CUSTOM_DOCKER_BUILD_ARGS}
 fi
 
-set -- $(echo ${@}) $(echo ${BUILD_CONTEXT})
+set -- ${@} ${BUILD_CONTEXT}
 
 for tag in $(echo ${DOCKER_IMAGE_TAGS})
 do
@@ -52,4 +52,4 @@ do
     set -- -t $(echo ${DOCKER_IMAGE_NAME_WITH_TAG}) $(echo ${@})
 done
 
-docker buildx build --push $(echo ${@})
+docker buildx build --push ${@}
