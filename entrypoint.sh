@@ -36,7 +36,7 @@ set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}")
 #   set -- $(echo "${@}") -f $(echo "${DOCKERFILE}")
 # fi
 
-if [ '$(echo "${DOCKER_IMAGE_PLATFORM}")' != '' ]; then
+if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
   set -- $(echo "${@}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}")
 fi
 
