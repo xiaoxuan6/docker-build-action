@@ -16,7 +16,7 @@ if [ $EXTRACT_TAG_FROM_GIT_REF == "true" ]; then
 fi
 
 DOCKER_IMAGE_NAME=$(echo ghcr.io/${GITHUB_REPOSITORY}/${DOCKER_IMAGE_NAME} | tr '[:upper:]' '[:lower:]')
-DOCKER_IMAGE_NAME_WITH_TAG=$(echo ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} | tr '[:upper:]' '[:lower:]')
+DOCKER_IMAGE_NAME_WITH_TAG=$(echo "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" | tr '[:upper:]' '[:lower:]')
 
 docker buildx create --use # Creating builder instance to support cross-platform builds
 
