@@ -30,7 +30,7 @@ if [ $PULL_IMAGE == "true" ]; then
   fi
 fi
 
-set -- -t $DOCKER_IMAGE_NAME_WITH_TAG
+set -- -t ${DOCKER_IMAGE_NAME_WITH_TAG}
 
 if [ $DOCKERFILE != "Dockerfile" ]; then
   set -- "$@" -f $DOCKERFILE
@@ -41,7 +41,7 @@ if [ $DOCKER_IMAGE_PLATFORM != "" ]; then
 fi
 
 if [ $CUSTOM_DOCKER_BUILD_ARGS != "" ]; then
-  set -- "$@" $CUSTOM_DOCKER_BUILD_ARGS
+  set -- "$@" "$CUSTOM_DOCKER_BUILD_ARGS"
 fi
 
 set -- "$@" $BUILD_CONTEXT
