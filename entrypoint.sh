@@ -40,9 +40,9 @@ if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
   set -- $(echo "${@}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}")
 fi
 
-# if [ $(echo "${CUSTOM_DOCKER_BUILD_ARGS}") != "" ]; then
-#   set -- $(echo "${@}") $(echo "${CUSTOM_DOCKER_BUILD_ARGS}")
-# fi
+if [ $(echo "${CUSTOM_DOCKER_BUILD_ARGS}") != "" ]; then
+  set -- $(echo "${@}") $(echo "${CUSTOM_DOCKER_BUILD_ARGS}")
+fi
 
 set -- $(echo "${@}") $(echo "${BUILD_CONTEXT}")
 
