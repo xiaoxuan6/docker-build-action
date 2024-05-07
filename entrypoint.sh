@@ -12,7 +12,7 @@ DOCKER_IMAGE_PLATFORM=$9
 CUSTOM_DOCKER_BUILD_ARGS=${10}
 
 if [ $(echo "${EXTRACT_TAG_FROM_GIT_REF}") == "true" ]; then
-  DOCKER_IMAGE_TAG=$(echo ${GITHUB_REF}" | sed -e "s/refs\/tags\///g")
+  DOCKER_IMAGE_TAG=$(echo "${GITHUB_REF}" | sed -e "s/refs\/tags\///g")
 fi
 
 DOCKER_IMAGE_NAME=$(echo "ghcr.io/${GITHUB_REPOSITORY}/${DOCKER_IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
