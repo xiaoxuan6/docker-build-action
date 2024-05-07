@@ -40,16 +40,21 @@ if [ $(echo ${DOCKER_IMAGE_PLATFORM}) != "" ]; then
   set -- $(echo ${@}) --platform $(echo ${DOCKER_IMAGE_PLATFORM})
 fi
 
+echo "Check args"
 if [ $(echo ${CUSTOM_DOCKER_BUILD_ARGS}) != "" ]; then
+  echo "Set args"
   set -- ${@} ${CUSTOM_DOCKER_BUILD_ARGS}
 fi
 
+echo "Set context"
 set -- ${@} ${BUILD_CONTEXT}
 
+echo "Check DOCKER_IMAGE_TAGS"
 for tag in $(echo ${DOCKER_IMAGE_TAGS})
 do
     DOCKER_IMAGE_NAME_WITH_TAG=$(echo ${DOCKER_IMAGE_NAME}:${tag} | tr '[:upper:]' '[:lower:]')
     set -- -t $(echo ${DOCKER_IMAGE_NAME_WITH_TAG}) $(echo ${@})
 done
 
+echo "Start build"
 docker buildx build --push ${@}
