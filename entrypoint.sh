@@ -36,9 +36,9 @@ set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}")
 #   set -- $(echo "${@}") -f $(echo "${DOCKERFILE}")
 # fi
 
-# if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
-#   set -- $(echo "${@}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}")
-# fi
+if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
+  set -- $(echo "${@}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}")
+fi
 
 # if [ $(echo "${CUSTOM_DOCKER_BUILD_ARGS}") != "" ]; then
 #   set -- $(echo "${@}") $(echo "${CUSTOM_DOCKER_BUILD_ARGS}")
