@@ -18,6 +18,8 @@ fi
 DOCKER_IMAGE_NAME=$(echo "ghcr.io/${GITHUB_REPOSITORY}/${DOCKER_IMAGE_NAME}" | tr '[:upper:]' '[:lower:]')
 DOCKER_IMAGE_NAME_WITH_TAG=$(echo "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}" | tr '[:upper:]' '[:lower:]')
 
+echo "${DOCKER_IMAGE_PLATFORM}"
+
 docker buildx create --use # Creating builder instance to support cross-platform builds
 
 docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
