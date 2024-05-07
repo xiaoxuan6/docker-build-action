@@ -41,7 +41,7 @@ if [ $(echo ${DOCKER_IMAGE_PLATFORM}) != "" ]; then
 fi
 
 echo "Check args"
-if [ $(echo ${CUSTOM_DOCKER_BUILD_ARGS}) != "" ]; then
+if [ $(("${CUSTOM_DOCKER_BUILD_ARGS}")) != "" ]; then
   echo "Set args"
   set -- ${@} ${CUSTOM_DOCKER_BUILD_ARGS}
 fi
