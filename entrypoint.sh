@@ -22,13 +22,13 @@ docker buildx create --use # Creating builder instance to support cross-platform
 
 docker login -u publisher -p ${DOCKER_TOKEN} ghcr.io
 
-# if [ $(echo "${PULL_IMAGE}") == "true" ]; then
-#   if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
-#     docker pull $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}") || docker pull $(echo "${DOCKER_IMAGE_NAME}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}") || true
-#   else
-#     docker pull $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}") || docker pull $(echo "${DOCKER_IMAGE_NAME}") || true
-#   fi
-# fi
+if [ $(echo "${PULL_IMAGE}") == "true" ]; then
+  if [ $(echo "${DOCKER_IMAGE_PLATFORM}") != "" ]; then
+    docker pull $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}") || docker pull $(echo "${DOCKER_IMAGE_NAME}") --platform $(echo "${DOCKER_IMAGE_PLATFORM}") || true
+  else
+    docker pull $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}") || docker pull $(echo "${DOCKER_IMAGE_NAME}") || true
+  fi
+fi
 
 set -- -t $(echo "${DOCKER_IMAGE_NAME_WITH_TAG}")
 
