@@ -30,7 +30,7 @@ if [ $PULL_IMAGE == "true" ]; then
   fi
 fi
 
-set -- -t ${DOCKER_IMAGE_NAME_WITH_TAG}
+set -- -t $(echo ${DOCKER_IMAGE_NAME_WITH_TAG})
 
 if [ $DOCKERFILE != "Dockerfile" ]; then
   set -- "$@" -f $DOCKERFILE
