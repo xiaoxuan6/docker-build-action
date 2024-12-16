@@ -5,8 +5,9 @@ inputs:
     description: 'GitHub token to push Docker image to GitHub Packages'
     required: true
   image-name:
-    description: 'Docker Image name'
-    required: true
+    description: 'Docker Image name (default: ${GITHUB_REPOSITORY})'
+    required: false
+    default: ''
   image-tag:
     description: 'Docker Image tag'
     default: "latest"
